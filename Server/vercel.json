@@ -4,14 +4,13 @@
   "builds": [
     {
       "src": "index.js",
-      "use": "@vercel/node@2.1",
-      "config": { "node": "14.x" }
+      "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/index.js"
+      "dest": "/"
     }
   ]
 }
