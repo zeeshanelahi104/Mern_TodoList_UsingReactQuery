@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const todosApi = axios.create({
-  baseURL: "http://localhost:8080",
+  // baseURL: "http://localhost:8080",
+  baseURL: "https://mern-todo-list-using-react-query-server.vercel.app/",
 });
 
 export const getTodos = async () => {
