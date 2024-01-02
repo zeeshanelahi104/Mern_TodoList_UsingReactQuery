@@ -3,6 +3,8 @@ import { getTodos, addTodo, updateTodo, deleteTodo } from "../../api/todosApi";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEdit, faUpload } from "@fortawesome/free-solid-svg-icons";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
 
 const TodoList = () => {
@@ -30,18 +32,25 @@ const TodoList = () => {
 
       // Invalidate cache to refetch the updated data
       queryClient.invalidateQueries("todos");
+      setNewTodo("");
+      setEditingTodoId(null);
+      toast.success("Todo added successfully!");
     },
   });
 
   const updateTodoMutation = useMutation(updateTodo, {
     onSuccess: () => {
       queryClient.invalidateQueries("todos");
+      setNewTodo("");
+      setEditingTodoId(null);
+      toast.success("Todo updated successfully!");
     },
   });
 
   const deleteTodoMutation = useMutation(deleteTodo, {
     onSuccess: () => {
       queryClient.invalidateQueries("todos");
+      toast.success("Todo deleted successfully!");
     },
   });
 
@@ -55,6 +64,8 @@ const TodoList = () => {
       }
       setNewTodo("");
       setEditingTodoId(null);
+    } else {
+      toast.error("Todo cannot be empty!");
     }
   };
 
@@ -128,6 +139,7 @@ const TodoList = () => {
 
   return (
     <main>
+      <ToastContainer position="bottom-right" />
       <h1>Todo List</h1>
       {newItemSection}
       {content}
