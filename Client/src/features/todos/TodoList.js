@@ -2,13 +2,13 @@ import { useQuery, useMutation, useQueryClient } from "react-query";
 import { getTodos, addTodo, updateTodo, deleteTodo } from "../../api/todosApi";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faUpload } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faEdit, faUpload } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
 const TodoList = () => {
   const [newTodo, setNewTodo] = useState("");
   const [editingTodoId, setEditingTodoId] = useState(null);
-  const [editedTitle, setEditedTitle] = useState("");
+
   const queryClient = useQueryClient();
 
   const {
@@ -47,21 +47,24 @@ const TodoList = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addTodoMutation.mutate({ title: newTodo, completed: false });
-    setNewTodo("");
+    if (newTodo.trim() !== "") {
+      if (editingTodoId !== null) {
+        handleSaveEdit(todos.find((todo) => todo._id === editingTodoId));
+      } else {
+        addTodoMutation.mutate({ title: newTodo.trim(), completed: false });
+      }
+      setNewTodo("");
+      setEditingTodoId(null);
+    }
   };
+
   const handleEdit = (todoId, currentTitle) => {
     setEditingTodoId(todoId);
-    setEditedTitle(currentTitle);
+    setNewTodo(currentTitle);
   };
 
   const handleSaveEdit = (todo) => {
-    updateTodoMutation.mutate({ ...todo, title: editedTitle });
-    setEditingTodoId(null);
-  };
-
-  const handleCancelEdit = () => {
-    setEditingTodoId(null);
+    updateTodoMutation.mutate({ ...todo, title: newTodo });
   };
   const newItemSection = (
     <form onSubmit={handleSubmit}>
@@ -102,31 +105,22 @@ const TodoList = () => {
                 })
               }
             />
-            {editingTodoId === todo._id ? (
-              <div className="edit-mode">
-                <input
-                  type="text"
-                  value={editedTitle}
-                  onChange={(e) => setEditedTitle(e.target.value)}
-                />
-                <button onClick={() => handleSaveEdit(todo)}>Save</button>
-                <button onClick={handleCancelEdit}>Cancel</button>
-              </div>
-            ) : (
-              <>
-                <label htmlFor={todo._id}>{todo.title}</label>
-                <button onClick={() => handleEdit(todo._id, todo.title)}>
-                  Edit
-                </button>
-              </>
-            )}
+            <label htmlFor={todo._id}>{todo.title}</label>
           </div>
-          <button
-            className="trash"
-            onClick={() => deleteTodoMutation.mutate({ id: todo._id })}
-          >
-            <FontAwesomeIcon icon={faTrash} />
-          </button>
+          <div className="icons">
+            <button
+              className="edit"
+              onClick={() => handleEdit(todo._id, todo.title)}
+            >
+              <FontAwesomeIcon icon={faEdit} />
+            </button>
+            <button
+              className="trash"
+              onClick={() => deleteTodoMutation.mutate({ id: todo._id })}
+            >
+              <FontAwesomeIcon icon={faTrash} />
+            </button>
+          </div>
         </article>
       );
     });
