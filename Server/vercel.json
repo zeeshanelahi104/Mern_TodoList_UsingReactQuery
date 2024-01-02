@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "framework": "express",
   "name": "TodoList",
   "builds": [
     {
