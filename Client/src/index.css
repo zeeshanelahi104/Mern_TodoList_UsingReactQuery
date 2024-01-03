@@ -39,14 +39,18 @@ article {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  width: 70%;
 }
 
 input[type="checkbox"] {
-  min-width: 30px;
+  min-width: 10%;
   min-height: 30px;
   margin-right: 1rem;
 }
-
+.label {
+  width: 90%;
+  word-wrap: break-word;
+}
 button {
   min-width: 50px;
   min-height: 50px;

@@ -103,7 +103,7 @@ const TodoList = () => {
   } else {
     content = todos.map((todo) => {
       return (
-        <article key={todo._id}>
+        <article key={todo._id} className="content">
           <div className="todo">
             <input
               type="checkbox"
@@ -116,7 +116,9 @@ const TodoList = () => {
                 })
               }
             />
-            <label htmlFor={todo._id}>{todo.title}</label>
+            <label className="label" htmlFor={todo._id}>
+              {todo.title}
+            </label>
           </div>
           <div className="icons">
             <button
