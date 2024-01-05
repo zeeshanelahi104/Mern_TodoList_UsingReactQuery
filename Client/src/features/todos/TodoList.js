@@ -103,7 +103,7 @@ const TodoList = () => {
   } else {
     content = todos.map((todo) => {
       return (
-        <article key={todo._id} className="content">
+        <article key={todo._id}>
           <div className="todo">
             <input
               type="checkbox"
@@ -141,7 +141,7 @@ const TodoList = () => {
 
   return (
     <main>
-      <ToastContainer position="bottom-right" />
+      <ToastContainer position="top-right" />
       <h1>Todo List</h1>
       {newItemSection}
       {content}

@@ -5,6 +5,8 @@ body {
   font-size: 1.5rem;
   background-color: #64748b;
   color: #18181b;
+  min-height: 100%;
+  width: 100vw;
 }
 
 input[type="text"],
@@ -14,7 +16,7 @@ button {
 
 main {
   margin: auto;
-  max-width: 600px;
+  max-width: 70%;
   background-color: #f8fafc;
   padding: 1rem 2rem;
   border-radius: 15px;
@@ -60,20 +62,28 @@ button {
 }
 .icons {
   display: flex;
-  align-items: center;
-  gap: 0.5em;
+  align-items: end;
+  justify-content: end;
+  gap: 10%;
+  width: 30%;
 }
 .edit {
   background-color: #f8fafc;
   color: #0865f0;
+  width: 30%;
 }
 .trash {
   background-color: #f8fafc;
   color: #ef4444;
+  width: 30%;
 }
 
 .trash:focus,
 .trash:hover {
+  filter: brightness(120%);
+}
+.edit:focus,
+.edit:hover {
   filter: brightness(120%);
 }
 
@@ -112,4 +122,25 @@ input[type="text"] {
 .submit:hover {
   background-color: limegreen;
   color: #f8fafc;
+}
+/* Media query for small screens */
+@media (max-width: 600px) {
+  article {
+    flex-direction: column;
+  }
+  .todo {
+    width: 100%;
+  }
+
+  .icons {
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 100%;
+    gap: 5%; /* Adjust the gap based on your preference */
+  }
+
+  .edit,
+  .trash {
+    width: auto; /* Allow the buttons to take the necessary space */
+  }
 }
