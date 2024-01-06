@@ -6,7 +6,6 @@ body {
   background-color: #64748b;
   color: #18181b;
   min-height: 100%;
-  width: 100vw;
 }
 
 input[type="text"],
@@ -16,7 +15,9 @@ button {
 
 main {
   margin: auto;
-  max-width: 70%;
+  margin-top: 3%;
+  margin-bottom: 3%;
+  width: 70%;
   background-color: #f8fafc;
   padding: 1rem 2rem;
   border-radius: 15px;
@@ -43,7 +44,9 @@ article {
   align-items: center;
   width: 70%;
 }
-
+.todo > input {
+  cursor: pointer;
+}
 input[type="checkbox"] {
   min-width: 10%;
   min-height: 30px;
@@ -65,7 +68,7 @@ button {
   align-items: end;
   justify-content: end;
   gap: 10%;
-  width: 30%;
+  width: 20%;
 }
 .edit {
   background-color: #f8fafc;
