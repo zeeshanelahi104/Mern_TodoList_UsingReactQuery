@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEdit, faUpload } from "@fortawesome/free-solid-svg-icons";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const TodoList = () => {
   const [newTodo, setNewTodo] = useState("");
@@ -53,7 +53,33 @@ const TodoList = () => {
       toast.success("Todo deleted successfully!");
     },
   });
+  const resetTodosAtMidnight = () => {
+    // Get the current time
+    const now = new Date();
+    // Check if it's midnight
+    if (
+      now.getHours() === 0 &&
+      now.getMinutes() === 0 &&
+      now.getSeconds() === 0
+    ) {
+      // Uncheck all todos
+      const updatedTodos = todos.map((todo) => ({
+        ...todo,
+        completed: false,
+      }));
+      // Update the todos in the cache
+      queryClient.setQueryData("todos", updatedTodos);
+      // Invalidate cache to refetch the updated data
+      queryClient.invalidateQueries("todos");
+    }
+  };
+  // Run the function to reset todos every second
+  useEffect(() => {
+    const intervalId = setInterval(resetTodosAtMidnight, 1000);
 
+    // Clean up the interval when the component is unmounted
+    return () => clearInterval(intervalId);
+  }, [todos, queryClient]);
   const handleSubmit = (e) => {
     e.preventDefault();
     if (newTodo.trim() !== "") {
